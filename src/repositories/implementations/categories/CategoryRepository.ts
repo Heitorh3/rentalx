@@ -17,6 +17,7 @@ class CategoryRepository implements ICategorysRepository {
 
     return category;
   }
+
   public async save(category: Category): Promise<void> {
     await this.ormRepository.save(category);
   }
