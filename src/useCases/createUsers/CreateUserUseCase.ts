@@ -5,6 +5,7 @@ import { ICreateUserUseCase } from "./ICreateUserUseCase";
 
 import { IUserRepository } from '@repositories/implementations/users/IUserRepository';
 
+import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import LoggerProvider from "@shared/container/providers/LoggerProvider/models/LoggerProvider";
 
@@ -16,6 +17,9 @@ class CreateUserUseCase implements ICreateUserUseCase {
   constructor(
     @inject('UserRepository')
     private userRepository: IUserRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
 
     @inject('CacheProvider')
     private cacheProvider: ICacheProvider,
@@ -31,10 +35,12 @@ class CreateUserUseCase implements ICreateUserUseCase {
       throw new AppError('Email address already exists');
     }
 
+    const hashedPassword = await this.hashProvider.generateHash(password);
+
     const user = await this.userRepository.create({
       name,
       email,
-      password,
+      password: hashedPassword,
     });
 
     this.loggerProvider.log('info', `User [${user.name}] added to database`, {

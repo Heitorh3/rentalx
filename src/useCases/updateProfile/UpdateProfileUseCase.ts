@@ -6,7 +6,7 @@ import { IUpdateProfileUseCase } from "./IUpdateProfileUseCase";
 
 import { IUserRepository } from '@repositories/implementations/users/IUserRepository';
 
-import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider'
+import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import LoggerProvider from "@shared/container/providers/LoggerProvider/models/LoggerProvider";
 
