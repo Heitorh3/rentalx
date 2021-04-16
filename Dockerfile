@@ -12,8 +12,6 @@ RUN yarn
 
 COPY --chown=node:node . .
 
-RUN yarn dev:server
-
 EXPOSE 3334
 
 CMD ["npm", "run", "dev:server"]

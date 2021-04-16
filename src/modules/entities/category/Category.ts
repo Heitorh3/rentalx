@@ -1,30 +1,36 @@
-import { v4 as uuid } from 'uuid';
+import { v4 as uuidV4 } from 'uuid';
 
 import {
   Entity,
+  PrimaryColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-
 @Entity('categories')
 class Category {
 
-  @Column
-  id: string;
+  @PrimaryColumn()
+  id?: string;
 
-  @Column
+  @Column()
   name: string;
 
-  @Column
+  @Column()
   description: string;
 
-  constructor(props: Omit<Category, 'id'>, id?: string) {
+  @CreateDateColumn()
+  created_at?: Date;
+
+  @UpdateDateColumn()
+  updated_at?: Date;
+
+  constructor(props: Exclude<Category, 'id' | "created_at" | "updated_at">, id?: string) {
     Object.assign(this, props);
 
     if (!id) {
-      this.id = uuid();
+      this.id = uuidV4();
     }
   }
 }

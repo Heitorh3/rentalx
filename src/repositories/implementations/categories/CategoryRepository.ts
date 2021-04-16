@@ -10,15 +10,14 @@ class CategoryRepository implements ICategorysRepository {
     this.ormRepository = getRepository(Category);
   }
 
-  async findByName(name: string): Promise<Category | undefined> {
-
+  public async findByName(name: string): Promise<Category | undefined> {
     const category = await this.ormRepository.findOne({
       where: { name },
     });
 
     return category;
   }
-  async save(category: Category): Promise<void> {
+  public async save(category: Category): Promise<void> {
     await this.ormRepository.save(category);
   }
 }

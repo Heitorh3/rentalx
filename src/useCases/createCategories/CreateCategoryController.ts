@@ -2,14 +2,14 @@ import { Request, Response } from 'express';
 
 import { injectable, inject } from 'tsyringe';
 
-import { CreateCategoryUseCase } from './CreateCategoryUseCase';
+import { ICreateCategoryUseCase } from './ICreateCategoryUseCase';
 
 @injectable()
 export class CreateCategoryController {
 
   constructor(
     @inject('CreateCategoryUseCase')
-    private createCategoryUseCase: CreateCategoryUseCase
+    private createCategoryUseCase: ICreateCategoryUseCase
   ) { }
 
   async handle(request: Request, response: Response): Promise<Response> {
@@ -26,3 +26,4 @@ export class CreateCategoryController {
     }
   }
 }
+
