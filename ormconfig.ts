@@ -7,7 +7,7 @@ export =[
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASS,
     database: process.env.POSTGRES_DB,
-    entities: ['src/modules/entities/**/*.ts'],
+    entities: ['src/modules/**/entities/*.ts'],
     migrations: ['src/shared/typeorm/migrations/*.ts'],
     cli: {
       migrationsDir: 'src/shared/typeorm/migrations/',

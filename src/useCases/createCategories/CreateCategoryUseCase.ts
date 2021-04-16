@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import { ICreateCategoryUseCase } from './ICreateCategoryUseCase';
 import { ICreateCategoryRequestDTO } from './ICreateCategoryRequestDTO'
 
-import { Category } from 'modules/entities/category/Category';
+import { Category } from '@modules/category/entities/Category';
 import { ICategorysRepository } from '@repositories/implementations/categories/ICategorysRepository';
 
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";

@@ -9,7 +9,7 @@ import '@shared/container';
 import '@shared/mongoose/connections';
 
 import AppError from '@shared/errors/AppError';
-// import TokenExpiredError from '@shared/errors/TokenExpiredError';
+import TokenExpiredError from '@shared/errors/TokenExpiredError';
 
 import routes from './api/v1';
 
@@ -37,12 +37,12 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
       .json({ status: 'error', message: err.message });
   }
 
-  // if (err instanceof TokenExpiredError) {
-  //   return response.status(401).json({
-  //     code: 'token.expired',
-  //     message: err.message,
-  //   });
-  // }
+  if (err instanceof TokenExpiredError) {
+    return response.status(401).json({
+      code: 'token.expired',
+      message: err.message,
+    });
+  }
 
   console.error(err);
 

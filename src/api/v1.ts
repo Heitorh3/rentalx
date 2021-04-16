@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { categoriesRoutes } from '../routes/Categories.routes'
+import { categoriesRoutes } from '../modules/category/routes/Categories.routes'
 
 const v1Router = Router();
 
