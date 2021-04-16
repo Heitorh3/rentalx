@@ -17,6 +17,14 @@ class UserRepository implements IUserRepository {
     return user;
   }
 
+  public async findByCpf(cpf: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: { cpf },
+    });
+
+    return user;
+  }
+
   public async findByEmail(email: string): Promise<User> {
     const userAlreadyExists = await this.ormRepository.findOne({
       where: { email }

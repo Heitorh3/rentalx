@@ -28,11 +28,17 @@ class CreateUserUseCase implements ICreateUserUseCase {
     private loggerProvider: LoggerProvider,
   ) { }
 
-  public async execute({ name, email, password }: ICreateUserRequestDTO): Promise<void> {
-    const checkUserExists = await this.userRepository.findByEmail(email);
+  public async execute({ name, email, cpf, password }: ICreateUserRequestDTO): Promise<void> {
+    const checkUserExistsByEmail = await this.userRepository.findByEmail(email);
 
-    if (checkUserExists) {
+    const checkUserExistsByCpf = await this.userRepository.findByCpf(cpf);
+
+    if (checkUserExistsByEmail) {
       throw new AppError('Email address already exists');
+    }
+
+    if (checkUserExistsByCpf) {
+      throw new AppError('Cpf already exists');
     }
 
     const hashedPassword = await this.hashProvider.generateHash(password);
@@ -40,6 +46,7 @@ class CreateUserUseCase implements ICreateUserUseCase {
     const user = await this.userRepository.create({
       name,
       email,
+      cpf,
       password: hashedPassword,
     });
 

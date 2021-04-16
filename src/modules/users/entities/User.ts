@@ -22,6 +22,9 @@ class User {
   email: string;
 
   @Column()
+  cpf: string;
+
+  @Column()
   avatar?: string;
 
   @Column()
