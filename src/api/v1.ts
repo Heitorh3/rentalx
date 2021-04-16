@@ -1,11 +1,13 @@
 import { Router } from 'express';
 
 import { categoriesRoutes } from '@modules/category/routes/Categories.routes'
-import { usersRoutes } from '@modules/users/routes/User.routes';
+import { usersRouter } from '@modules/users/routes/user.routes';
+import { profileRouter } from "@modules/users/routes/profile.routes";
 
 const v1Router = Router();
 
 v1Router.use('/categories', categoriesRoutes);
-v1Router.use('/users', usersRoutes)
+v1Router.use('/users', usersRouter)
+v1Router.use('/profile', profileRouter);
 
 export default v1Router;

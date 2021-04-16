@@ -12,6 +12,7 @@
       "start": "ts-node src/index.ts"
    },
    "dependencies": {
+      "bcryptjs": "^2.4.3",
       "cors": "^2.8.5",
       "dotenv": "^8.2.0",
       "express": "^4.17.1",
@@ -35,6 +36,7 @@
       "winston-mongodb": "^5.0.7"
    },
    "devDependencies": {
+      "@types/bcryptjs": "^2.4.2",
       "@types/express": "^4.17.11",
       "@types/jest": "^26.0.20",
       "@types/mocha": "^8.2.1",
