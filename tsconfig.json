@@ -31,6 +31,15 @@
       "@useCases/*": [
         "useCases/*"
       ]
-    },
-  }
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "coverage",
+    "dist",
+    "*.config.js"
+  ]
 }
