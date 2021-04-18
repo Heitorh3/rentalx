@@ -2,7 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import { ICreateUserUseCase } from "./ICreateUserUseCase";
 
-import { IUserRepository } from '@modules/users/infra/typeorm/repositories/implementations/users/IUserRepository';
+import { IUserRepository } from '@modules/users/infra/typeorm/repositories/implementations/IUserRepository';
 
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";

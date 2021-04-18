@@ -1,10 +1,10 @@
 import { injectable, inject } from 'tsyringe';
 
 import { ICreateCategoryUseCase } from './ICreateCategoryUseCase';
-import { ICreateCategoryRequestDTO } from './ICreateCategoryRequestDTO'
+import { ICreateCategoryRequestDTO } from '../../dtos/ICreateCategoryRequestDTO'
 
-import { Category } from '@modules/category/entities/Category';
-import { ICategorysRepository } from '@modules/category/repositories/implementations/categories/ICategorysRepository';
+import { Category } from '@modules/category/infra/typeorm/entities/Category';
+import { ICategorysRepository } from '@modules/category/infra/typeorm/repositories/implementations/categories/ICategorysRepository';
 
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import LoggerProvider from "@shared/container/providers/LoggerProvider/models/ILoggerProvider";

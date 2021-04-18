@@ -3,8 +3,8 @@ import { container } from 'tsyringe';
 
 import './providers';
 
-import { CategoryRepository } from '@modules/category/repositories/implementations/categories/CategoryRepository';
-import { ICategorysRepository } from '@modules/category/repositories/implementations/categories/ICategorysRepository';
+import { CategoryRepository } from '@modules/category/infra/typeorm/repositories/implementations/categories/CategoryRepository';
+import { ICategorysRepository } from '@modules/category/infra/typeorm/repositories/implementations/categories/ICategorysRepository';
 
 import { ICreateCategoryUseCase } from '@modules/category/services/createCategories/ICreateCategoryUseCase'
 import { CreateCategoryUseCase } from '@modules/category/services/createCategories/CreateCategoryUseCase'

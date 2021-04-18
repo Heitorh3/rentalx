@@ -3,7 +3,7 @@ import AppError from '@shared/infra/errors/AppError';
 
 import { CreateUserUseCase } from './CreateUserUseCase';
 
-import FakeUserRepository from "@modules/users/infra/typeorm/repositories/implementations/users/fakes/FakeUserRepository";
+import FakeUserRepository from "@modules/users/infra/typeorm/repositories/implementations/fakes/FakeUserRepository";
 import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
 import FakeLoggerProvider from '@shared/container/providers/LoggerProvider/fakes/FakeLoggerProvider';
