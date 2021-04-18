@@ -24,7 +24,7 @@ class User {
   @Column()
   cpf: string;
 
-  @Column()
+  @Column({ nullable: true })
   avatar?: string;
 
   @Column()
@@ -59,4 +59,4 @@ class User {
   }
 }
 
-export { User };
+export default User;

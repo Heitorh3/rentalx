@@ -1,15 +1,16 @@
 import { injectable, inject } from 'tsyringe';
 
-import ICreateUserRequestDTO from "./ICreateUserRequestDTO";
 import { ICreateUserUseCase } from "./ICreateUserUseCase";
 
 import { IUserRepository } from '@repositories/implementations/users/IUserRepository';
 
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
-import LoggerProvider from "@shared/container/providers/LoggerProvider/models/LoggerProvider";
+import LoggerProvider from "@shared/container/providers/LoggerProvider/models/ILoggerProvider";
 
 import AppError from '@shared/errors/AppError';
+import ICreateUserRequestDTO from './ICreateUserRequestDTO';
+import User from '@modules/users/entities/User';
 
 @injectable()
 class CreateUserUseCase implements ICreateUserUseCase {
@@ -28,7 +29,7 @@ class CreateUserUseCase implements ICreateUserUseCase {
     private loggerProvider: LoggerProvider,
   ) { }
 
-  public async execute({ name, email, cpf, password }: ICreateUserRequestDTO): Promise<void> {
+  public async execute({ name, email, cpf, password }: ICreateUserRequestDTO): Promise<User> {
     const checkUserExistsByEmail = await this.userRepository.findByEmail(email);
 
     const checkUserExistsByCpf = await this.userRepository.findByCpf(cpf);
@@ -55,6 +56,7 @@ class CreateUserUseCase implements ICreateUserUseCase {
     });
 
     await this.cacheProvider.invalidatePrefix('providers-list');
+    return user;
   }
 }
 

@@ -1,0 +1,61 @@
+import "reflect-metadata"
+import AppError from '@shared/errors/AppError';
+
+import { CreateUserUseCase } from './CreateUserUseCase';
+
+import FakeUserRepository from "@repositories/implementations/users/fakes/FakeUserRepository";
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
+import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
+import FakeLoggerProvider from '@shared/container/providers/LoggerProvider/fakes/FakeLoggerProvider';
+
+let createUserUseCase: CreateUserUseCase;
+
+let fakeUserRepository: FakeUserRepository;
+let fakeCacheProvider: FakeCacheProvider;
+let fakeHashProvider: FakeHashProvider;
+let fakeLoggerProvider: FakeLoggerProvider;
+
+describe('Create user', () => {
+  beforeEach(() => {
+    fakeUserRepository = new FakeUserRepository();
+    fakeCacheProvider = new FakeCacheProvider();
+    fakeHashProvider = new FakeHashProvider();
+    fakeLoggerProvider = new FakeLoggerProvider();
+
+    createUserUseCase = new CreateUserUseCase(
+      fakeUserRepository,
+      fakeHashProvider,
+      fakeCacheProvider,
+      fakeLoggerProvider
+    );
+  });
+
+  it('should be able to create a new user', async () => {
+    const user = await createUserUseCase.execute({
+      name: 'John Doe',
+      email: 'johndoe@gmail.com',
+      cpf: '68235321068',
+      password: '123456',
+    });
+
+    expect(user).toHaveProperty('id');
+  });
+
+  it('should not be able to create a new user with same email from another', async () => {
+    await createUserUseCase.execute({
+      name: 'John Doe',
+      email: 'johndoe@gmail.com',
+      cpf: '68235321068',
+      password: '123456',
+    });
+
+    await expect(
+      createUserUseCase.execute({
+        name: 'John Doe',
+        email: 'johndoe@gmail.com',
+        cpf: '68235321068',
+        password: '123456',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+});

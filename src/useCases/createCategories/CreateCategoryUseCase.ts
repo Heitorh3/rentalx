@@ -7,7 +7,7 @@ import { Category } from '@modules/category/entities/Category';
 import { ICategorysRepository } from '@repositories/implementations/categories/ICategorysRepository';
 
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
-import LoggerProvider from "@shared/container/providers/LoggerProvider/models/LoggerProvider";
+import LoggerProvider from "@shared/container/providers/LoggerProvider/models/ILoggerProvider";
 
 @injectable()
 export class CreateCategoryUseCase implements ICreateCategoryUseCase {

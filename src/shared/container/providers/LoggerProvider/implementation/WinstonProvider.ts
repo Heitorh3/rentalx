@@ -1,6 +1,6 @@
 import { createLogger, LoggerOptions, Logger } from 'winston';
 
-import LoggerProvider from '../models/LoggerProvider';
+import LoggerProvider from '../models/ILoggerProvider';
 
 class WinstonProvider implements LoggerProvider {
   private logger: Logger;
