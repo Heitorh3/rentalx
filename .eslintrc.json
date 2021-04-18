@@ -62,7 +62,9 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          "/^@shared/",
+          "/^@modules/",
+          "/^@/useCases",
+          "/^@/repositories",
           "/^@/",
           [
             "parent",
