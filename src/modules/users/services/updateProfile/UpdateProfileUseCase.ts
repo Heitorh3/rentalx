@@ -4,7 +4,7 @@ import { injectable, inject } from 'tsyringe';
 import IUpdateProfileRequestDTO from "../../dtos/IUpdateProfileRequestDTO";
 import { IUpdateProfileUseCase } from "./IUpdateProfileUseCase";
 
-import { IUserRepository } from '@modules/users/infra/typeorm/repositories/implementations/users/IUserRepository';
+import { IUserRepository } from '@modules/users/infra/typeorm/repositories/implementations/IUserRepository';
 
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
@@ -33,6 +33,7 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
     user_id,
     name,
     email,
+    cpf,
     password,
     old_password }: IUpdateProfileRequestDTO): Promise<User> {
     const user = await this.userRepository.findById(user_id);
@@ -74,9 +75,10 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
 
       user.name = name;
       user.email = email;
+      user.cpf = cpf;
 
       await this.cacheProvider.invalidatePrefix('users-list');
-      return this.userRepository.save(user);
+      return await this.userRepository.save(user);
     }
   }
 }
