@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
 import { categoriesRoutes } from '@modules/category/routes/Categories.routes'
-import { usersRouter } from '@modules/users/routes/user.routes';
-import { profileRouter } from "@modules/users/routes/profile.routes";
+import { usersRouter } from '@modules/users/infra/http/routes/user.routes';
+import { profileRouter } from "@modules/users/infra/http/routes/profile.routes";
 
 const v1Router = Router();
 

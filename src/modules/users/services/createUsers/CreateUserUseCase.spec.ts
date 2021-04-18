@@ -1,9 +1,9 @@
 import "reflect-metadata"
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/infra/errors/AppError';
 
 import { CreateUserUseCase } from './CreateUserUseCase';
 
-import FakeUserRepository from "@repositories/implementations/users/fakes/FakeUserRepository";
+import FakeUserRepository from "@modules/users/infra/typeorm/repositories/implementations/users/fakes/FakeUserRepository";
 import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
 import FakeLoggerProvider from '@shared/container/providers/LoggerProvider/fakes/FakeLoggerProvider';
@@ -53,6 +53,24 @@ describe('Create user', () => {
       createUserUseCase.execute({
         name: 'John Doe',
         email: 'johndoe@gmail.com',
+        cpf: '81066081662',
+        password: '123456',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to create a new user with same cpf from another', async () => {
+    await createUserUseCase.execute({
+      name: 'John Doe',
+      email: 'johndoe@gmail.com',
+      cpf: '68235321068',
+      password: '123456',
+    });
+
+    await expect(
+      createUserUseCase.execute({
+        name: 'John Doe',
+        email: 'john_doe@gmail.com',
         cpf: '68235321068',
         password: '123456',
       }),

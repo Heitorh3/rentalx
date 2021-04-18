@@ -63,8 +63,7 @@
         "groups": [
           "module",
           "/^@modules/",
-          "/^@/useCases",
-          "/^@/repositories",
+          "/^@/shared",
           "/^@/",
           [
             "parent",

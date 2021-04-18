@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { UpdateProfileController } from '@useCases/updateProfile/UpdateProfileController';
+import { UpdateProfileController } from '@modules/users/services/updateProfile/UpdateProfileController';
 
 const profileRouter = Router();
 

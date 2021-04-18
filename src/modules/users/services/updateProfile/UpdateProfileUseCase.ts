@@ -1,16 +1,16 @@
-import User from '@modules/users/entities/User';
+import User from '@modules/users/infra/typeorm/entities/User';
 import { injectable, inject } from 'tsyringe';
 
-import IUpdateProfileRequestDTO from "./IUpdateProfileRequestDTO";
+import IUpdateProfileRequestDTO from "../../dtos/IUpdateProfileRequestDTO";
 import { IUpdateProfileUseCase } from "./IUpdateProfileUseCase";
 
-import { IUserRepository } from '@repositories/implementations/users/IUserRepository';
+import { IUserRepository } from '@modules/users/infra/typeorm/repositories/implementations/users/IUserRepository';
 
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import LoggerProvider from "@shared/container/providers/LoggerProvider/models/ILoggerProvider";
 
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/infra/errors/AppError';
 
 @injectable()
 class UpdateProfileUseCase implements IUpdateProfileUseCase {

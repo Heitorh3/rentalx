@@ -4,12 +4,12 @@ import 'dotenv/config';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 
-import '@shared/typeorm';
+import '@shared/infra/typeorm';
 import '@shared/container';
 import '@shared/mongoose/connections';
 
-import AppError from '@shared/errors/AppError';
-import TokenExpiredError from '@shared/errors/TokenExpiredError';
+import AppError from '@shared/infra/errors/AppError';
+import TokenExpiredError from '@shared/infra/errors/TokenExpiredError';
 
 import routes from './api/v1';
 

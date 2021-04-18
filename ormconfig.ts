@@ -8,9 +8,9 @@ export =[
     password: process.env.POSTGRES_PASS,
     database: process.env.POSTGRES_DB,
     entities: ['src/modules/**/entities/*.ts'],
-    migrations: ['src/shared/typeorm/migrations/*.ts'],
+    migrations: ['src/shared/infra/typeorm/migrations/*.ts'],
     cli: {
-      migrationsDir: 'src/shared/typeorm/migrations/',
+      migrationsDir: 'src/shared/infra/typeorm/migrations/',
     },
   },
   {
@@ -22,6 +22,6 @@ export =[
     password: process.env.MONGO_PASS,
     database: process.env.MONGO_DB,
     useUnifiedTopology: true,
-    entities: ['src/modules/schemas/*.ts'],
+    entities: ['src/modules/**/infra/mongoose/schemas/*.ts'],
   },
 ];
