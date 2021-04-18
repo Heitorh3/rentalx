@@ -1,20 +1,18 @@
 import { injectable, inject } from 'tsyringe';
 
-import { ICreateUserUseCase } from "./ICreateUserUseCase";
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
+import LoggerProvider from '@shared/container/providers/LoggerProvider/models/ILoggerProvider';
+import AppError from '@shared/infra/errors/AppError';
 
+import User from '@modules/users/infra/typeorm/entities/User';
 import { IUserRepository } from '@modules/users/infra/typeorm/repositories/implementations/IUserRepository';
 
-import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
-import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
-import LoggerProvider from "@shared/container/providers/LoggerProvider/models/ILoggerProvider";
-
-import AppError from '@shared/infra/errors/AppError';
 import ICreateUserRequestDTO from '../../dtos/ICreateUserRequestDTO';
-import User from '@modules/users/infra/typeorm/entities/User';
+import { ICreateUserUseCase } from './ICreateUserUseCase';
 
 @injectable()
 class CreateUserUseCase implements ICreateUserUseCase {
-
   constructor(
     @inject('UserRepository')
     private userRepository: IUserRepository,
@@ -29,7 +27,12 @@ class CreateUserUseCase implements ICreateUserUseCase {
     private loggerProvider: LoggerProvider,
   ) { }
 
-  public async execute({ name, email, cpf, password }: ICreateUserRequestDTO): Promise<User> {
+  public async execute({
+    name,
+    email,
+    cpf,
+    password,
+  }: ICreateUserRequestDTO): Promise<User> {
     const checkUserExistsByEmail = await this.userRepository.findByEmail(email);
 
     const checkUserExistsByCpf = await this.userRepository.findByCpf(cpf);
@@ -60,4 +63,4 @@ class CreateUserUseCase implements ICreateUserUseCase {
   }
 }
 
-export { CreateUserUseCase }
+export { CreateUserUseCase };

@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 
 import { Category } from '@modules/category/infra/typeorm/entities/Category';
+
 import { ICategorysRepository } from './ICategorysRepository';
 
 class CategoryRepository implements ICategorysRepository {

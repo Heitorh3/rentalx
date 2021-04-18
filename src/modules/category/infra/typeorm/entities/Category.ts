@@ -1,5 +1,3 @@
-import { v4 as uuidV4 } from 'uuid';
-
 import {
   Entity,
   PrimaryColumn,
@@ -7,10 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { v4 as uuidV4 } from 'uuid';
 
 @Entity('categories')
 class Category {
-
   @PrimaryColumn()
   id?: string;
 
@@ -26,7 +24,10 @@ class Category {
   @UpdateDateColumn()
   updated_at?: Date;
 
-  constructor(props: Exclude<Category, 'id' | "created_at" | "updated_at">, id?: string) {
+  constructor(
+    props: Exclude<Category, 'id' | 'created_at' | 'updated_at'>,
+    id?: string,
+  ) {
     Object.assign(this, props);
 
     if (!id) {

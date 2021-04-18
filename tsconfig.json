@@ -19,17 +19,11 @@
       "@modules/*": [
         "modules/*"
       ],
-      "@repositories/*": [
-        "repositories/*"
-      ],
       "@config/*": [
         "config/*"
       ],
       "@shared/*": [
         "shared/*"
-      ],
-      "@useCases/*": [
-        "useCases/*"
       ]
     }
   },
