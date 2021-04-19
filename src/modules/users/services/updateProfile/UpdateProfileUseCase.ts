@@ -42,15 +42,9 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
       throw new AppError('User not found.');
     }
 
-    if (!cpf) {
+    if (!cpf || !email) {
       throw new AppError(
-        'You need to inform the cpf.',
-      );
-    }
-
-    if (!email) {
-      throw new AppError(
-        'You need to inform the e-mail.',
+        'You need to inform the cpf and email address.',
       );
     }
 
