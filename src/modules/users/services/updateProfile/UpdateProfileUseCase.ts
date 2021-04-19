@@ -42,6 +42,18 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
       throw new AppError('User not found.');
     }
 
+    if (!cpf) {
+      throw new AppError(
+        'You need to inform the cpf.',
+      );
+    }
+
+    if (!email) {
+      throw new AppError(
+        'You need to inform the e-mail.',
+      );
+    }
+
     const userWithUpdatedEmail = await this.userRepository.findByEmail(email);
 
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id) {
@@ -72,14 +84,14 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
       this.loggerProvider.log('info', `Password change from [${user.name}]`, {
         messageID: user.id,
       });
-
-      user.name = name;
-      user.email = email;
-      user.cpf = cpf;
-
-      await this.cacheProvider.invalidatePrefix('users-list');
-      return await this.userRepository.save(user);
     }
+
+    user.name = name;
+    user.email = email;
+    user.cpf = cpf;
+
+    await this.cacheProvider.invalidatePrefix('users-list');
+    return await this.userRepository.save(user);
   }
 }
 

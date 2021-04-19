@@ -41,14 +41,11 @@ describe('Update profile ', () => {
       user_id: user.id,
       name: 'Jhon Doe 1',
       email: 'johndoe@hotmail.com',
-      cpf: '75732041400'
+      cpf: '68235321068'
     });
 
-    //  TODO: Verificar porque esta vindo com undefined.
-    console.log(updatedUser);
-
     expect(updatedUser.name).toBe('Jhon Doe 1');
-    expect(updatedUser.email).toBe('johndoe@gmail.com.br');
+    expect(updatedUser.email).toBe('johndoe@hotmail.com');
   });
 
   it('should not be able to change to another user email', async () => {
@@ -71,6 +68,7 @@ describe('Update profile ', () => {
         user_id: user.id,
         name: 'Jhon Doe',
         email: 'johndoe@gmail.com',
+        cpf: '68235321068',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -87,6 +85,7 @@ describe('Update profile ', () => {
       user_id: user.id,
       name: 'Jhon Doe',
       email: 'johndoe@gmail.com',
+      cpf: '68235321068',
       old_password: '123456',
       password: '123123',
     });
@@ -107,7 +106,44 @@ describe('Update profile ', () => {
         user_id: user.id,
         name: 'Jhon Doe',
         email: 'johndoe@gmail.com',
+        cpf: '68235321068',
         password: '123123',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to update the cpf with empty value', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'Jhon Doe',
+      email: 'johndoe@gmail.com',
+      cpf: '68235321068',
+      password: '123456',
+    });
+
+    await expect(
+      updateProfile.execute({
+        user_id: user.id,
+        name: 'Jhon Doe',
+        email: 'johndoe@gmail.com',
+        cpf: '',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to update the e-mail with empty value', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'Jhon Doe',
+      email: 'johndoe@gmail.com',
+      cpf: '68235321068',
+      password: '123456',
+    });
+
+    await expect(
+      updateProfile.execute({
+        user_id: user.id,
+        name: 'Jhon Doe',
+        email: '',
+        cpf: '68235321068'
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -125,6 +161,7 @@ describe('Update profile ', () => {
         user_id: user.id,
         name: 'Jhon Doe',
         email: 'johndoe@gmail.com',
+        cpf: '68235321068',
         old_password: 'wrong-old-password',
         password: '123123',
       }),
@@ -137,6 +174,7 @@ describe('Update profile ', () => {
         user_id: 'non-existing-user',
         name: 'Jhon Doe',
         email: 'johndoe@gmail.com',
+        cpf: '68235321068',
         password: '123123',
       }),
     ).rejects.toBeInstanceOf(AppError);
