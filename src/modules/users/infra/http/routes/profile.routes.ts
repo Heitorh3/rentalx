@@ -1,12 +1,14 @@
 import { Router } from 'express';
-
 import { celebrate, Segments, Joi } from 'celebrate';
+
+import ensureAuthenticated from '@shared/infra/http/middlewares/EnsureAuthenticated';
 
 import { UpdateProfileController } from '@modules/users/infra/http/controllers/UpdateProfileController';
 
 const profileRouter = Router();
-
 const updateProfileController = new UpdateProfileController();
+
+profileRouter.use(ensureAuthenticated);
 
 profileRouter.put('/', celebrate({
   [Segments.BODY]: {
