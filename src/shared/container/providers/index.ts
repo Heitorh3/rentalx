@@ -3,3 +3,4 @@ import './MailTemplateProvider';
 import './StorageProvider';
 import './CacheProvider';
 import './HashProvider';
+import './EmailProvider';

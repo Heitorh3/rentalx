@@ -27,4 +27,4 @@ passwordRouter.post(
   ResetPasswordController.handle,
 );
 
-export default passwordRouter;
+export { passwordRouter };

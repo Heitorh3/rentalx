@@ -31,6 +31,8 @@ app.use(
 );
 
 app.use(routes);
+
+app.use(Sentry.Handlers.errorHandler());
 app.use(errors);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
