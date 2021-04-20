@@ -19,9 +19,11 @@ import routes from './api/v1';
 
 const app = express();
 
-Sentry.init({ dsn: sentryConfig.dsn });
-
 app.use(express.json());
+
+Sentry.init({ dsn: sentryConfig.dsn, tracesSampleRate: sentryConfig.tracesSampleRate });
+
+app.use(Sentry.Handlers.errorHandler());
 
 app.use(
   cors({
@@ -31,9 +33,8 @@ app.use(
 );
 
 app.use(routes);
-
+app.use(errors());
 app.use(Sentry.Handlers.errorHandler());
-app.use(errors);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   if (process.env.NODE_ENV !== 'production') {
