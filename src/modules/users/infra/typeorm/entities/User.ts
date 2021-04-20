@@ -1,4 +1,5 @@
 import { v4 as uuidV4 } from 'uuid';
+import { Exclude, Expose } from 'class-transformer';
 
 import {
   Entity,
@@ -28,6 +29,7 @@ class User {
   avatar?: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @CreateDateColumn()
@@ -44,6 +46,8 @@ class User {
     }
   }
 
+
+  @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {
     if (!this.avatar) {
       return null;

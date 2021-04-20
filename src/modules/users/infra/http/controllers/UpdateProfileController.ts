@@ -10,10 +10,10 @@ class UpdateProfileController {
 
     const updateProfileUseCase = container.resolve(UpdateProfileUseCase)
 
-    const { name, email, password, old_password } = request.body;
+    const { name, email, cpf, password, old_password } = request.body;
 
     try {
-      await updateProfileUseCase.execute({ user_id, name, email, password, old_password });
+      await updateProfileUseCase.execute({ user_id, name, email, cpf, password, old_password });
 
       return response.status(201).send();
     } catch (err) {

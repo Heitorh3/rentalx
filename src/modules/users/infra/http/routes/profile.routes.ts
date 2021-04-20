@@ -6,9 +6,10 @@ import ensureAuthenticated from '@shared/infra/http/middlewares/EnsureAuthentica
 import { UpdateProfileController } from '@modules/users/infra/http/controllers/UpdateProfileController';
 
 const profileRouter = Router();
-const updateProfileController = new UpdateProfileController();
 
 profileRouter.use(ensureAuthenticated);
+
+const updateProfileController = new UpdateProfileController();
 
 profileRouter.put('/', celebrate({
   [Segments.BODY]: {

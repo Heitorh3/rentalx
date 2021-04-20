@@ -4,7 +4,7 @@ import { ICreateCategoryUseCase } from './ICreateCategoryUseCase';
 import { ICreateCategoryRequestDTO } from '../../dtos/ICreateCategoryRequestDTO'
 
 import { Category } from '@modules/category/infra/typeorm/entities/Category';
-import { ICategorysRepository } from '@modules/category/infra/typeorm/repositories/implementations/categories/ICategorysRepository';
+import { ICategorysRepository } from '@modules/category/infra/typeorm/repositories/implementations/ICategorysRepository';
 
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import LoggerProvider from "@shared/container/providers/LoggerProvider/models/ILoggerProvider";

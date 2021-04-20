@@ -1,19 +1,25 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 
+import { errors } from 'celebrate';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import 'express-async-errors';
+
+import sentryConfig from '@config/sentry';
+import * as Sentry from '@sentry/node';
 
 import '@shared/infra/typeorm';
 import '@shared/container';
 import '@shared/mongoose/connections';
-
 import AppError from '@shared/infra/errors/AppError';
 import TokenExpiredError from '@shared/infra/errors/TokenExpiredError';
 
 import routes from './api/v1';
 
 const app = express();
+
+Sentry.init({ dsn: sentryConfig.dsn });
 
 app.use(express.json());
 
@@ -25,6 +31,7 @@ app.use(
 );
 
 app.use(routes);
+app.use(errors);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   if (process.env.NODE_ENV !== 'production') {

@@ -9,7 +9,7 @@ sessionsRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      cpf: Joi.string().email().required(),
+      cpf: Joi.string().required().min(11).max(11),
       password: Joi.string().required(),
     },
   }),

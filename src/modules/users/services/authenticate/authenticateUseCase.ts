@@ -29,7 +29,7 @@ class AuthenticateUserUseCase implements IAthenticateUserUseCase {
     const user = await this.userRepository.findByCpf(cpf);
 
     if (!user) {
-      throw new AppError('Incorrect email and password combination', 401);
+      throw new AppError('Incorrect cpf and password combination', 401);
     }
 
     const passwordMatched = await this.hashProvider.compareHash(
@@ -38,7 +38,7 @@ class AuthenticateUserUseCase implements IAthenticateUserUseCase {
     );
 
     if (!passwordMatched) {
-      throw new AppError('Incorrect email and password combination', 401);
+      throw new AppError('Incorrect cpf and password combination', 401);
     }
 
     const { secret, expiresIn } = authConfig.jwt;

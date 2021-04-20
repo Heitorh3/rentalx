@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import { AuthenticateUserUseCase } from '@modules/users/services/authenticate/authenticateUseCase';
+import { classToClass } from 'class-transformer';
 
 class SessionsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -15,10 +16,7 @@ class SessionsController {
     });
 
     return response.json({
-      user: {
-        name: user.name,
-        email: user.email,
-      }, token
+      user: classToClass(user), token
     });
   }
 }

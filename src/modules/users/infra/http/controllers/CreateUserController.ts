@@ -1,3 +1,5 @@
+import { classToClass } from 'class-transformer';
+
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -6,14 +8,14 @@ import { CreateUserUseCase } from '../../../services/createUsers/CreateUserUseCa
 export class CreateUserController {
 
   public async handle(request: Request, response: Response): Promise<Response> {
-    const createUserUseCase = container.resolve(CreateUserUseCase)
-
     const { name, email, cpf, password } = request.body;
 
-    try {
-      await createUserUseCase.execute({ name, email, cpf, password });
+    const createUserUseCase = container.resolve(CreateUserUseCase)
 
-      return response.status(201).send();
+    try {
+      const user = await createUserUseCase.execute({ name, email, cpf, password });
+
+      return response.json(classToClass(user));
     } catch (err) {
       return response.status(400).json({
         message: err.message || 'Unexpected error.',
