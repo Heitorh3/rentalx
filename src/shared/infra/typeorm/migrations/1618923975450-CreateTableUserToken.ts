@@ -9,7 +9,7 @@ export class CreateTableUserToken1618923975450 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'varchar',
             isPrimary: true
           },
           {
@@ -19,7 +19,7 @@ export class CreateTableUserToken1618923975450 implements MigrationInterface {
           },
           {
             name: 'user_id',
-            type: 'uuid',
+            type: 'varchar',
           },
           {
             name: 'created_at',

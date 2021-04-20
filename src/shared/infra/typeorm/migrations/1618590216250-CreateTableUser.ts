@@ -9,7 +9,7 @@ export class CreateTableUser1618590216250 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'varchar',
             isPrimary: true
           },
           {
