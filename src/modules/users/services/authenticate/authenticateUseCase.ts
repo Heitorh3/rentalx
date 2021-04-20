@@ -7,7 +7,7 @@ import IAthenticateUserRequestDTO from "@modules/users/dtos/IAthenticateUserRequ
 import IResponseUserDTO from "@modules/users/dtos/IResponseUserDTO";
 import { IAthenticateUserUseCase, } from "./IAthenticateUserUseCase";
 
-import { IUserRepository } from '@modules/users/infra/typeorm/repositories/implementations/IUserRepository';
+import { IUserRepository } from '@modules/users/repositories/IUserRepository';
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import LoggerProvider from '@shared/container/providers/LoggerProvider/models/ILoggerProvider';
 import AppError from '@shared/infra/errors/AppError';

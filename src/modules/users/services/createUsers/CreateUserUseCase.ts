@@ -6,7 +6,7 @@ import LoggerProvider from '@shared/container/providers/LoggerProvider/models/IL
 import AppError from '@shared/infra/errors/AppError';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-import { IUserRepository } from '@modules/users/infra/typeorm/repositories/implementations/IUserRepository';
+import { IUserRepository } from '@modules/users/repositories/IUserRepository';
 
 import ICreateUserRequestDTO from '../../dtos/ICreateUserRequestDTO';
 import { ICreateUserUseCase } from './ICreateUserUseCase';

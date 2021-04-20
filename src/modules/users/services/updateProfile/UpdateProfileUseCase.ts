@@ -4,7 +4,7 @@ import { injectable, inject } from 'tsyringe';
 import IUpdateProfileRequestDTO from "../../dtos/IUpdateProfileRequestDTO";
 import { IUpdateProfileUseCase } from "./IUpdateProfileUseCase";
 
-import { IUserRepository } from '@modules/users/infra/typeorm/repositories/implementations/IUserRepository';
+import { IUserRepository } from '@modules/users/repositories/IUserRepository';
 
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";

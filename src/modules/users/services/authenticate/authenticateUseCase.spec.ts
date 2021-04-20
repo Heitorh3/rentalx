@@ -2,7 +2,7 @@ import "reflect-metadata"
 
 import AppError from '@shared/infra/errors/AppError';
 
-import FakeUserRepository from "@modules/users/infra/typeorm/repositories/implementations/fakes/FakeUserRepository";
+import FakeUserRepository from "@modules/users/repositories/fakes/FakeUserRepository";
 import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
 import FakeLoggerProvider from '@shared/container/providers/LoggerProvider/fakes/FakeLoggerProvider';
 import { AuthenticateUserUseCase } from './authenticateUseCase';
