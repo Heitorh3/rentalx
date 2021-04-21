@@ -1,5 +1,9 @@
 import path from 'path';
+import { add } from 'date-fns';
+
 import { injectable, inject } from "tsyringe";
+
+import authConfig from '@config/auth';
 
 import { ISendEmailPasswordRequestDTO } from "@modules/users/dtos/ISendEmailPasswordRequestDTO";
 import { ISendEmailForgotPassword } from "./ISendEmailForgotPassword";
@@ -31,11 +35,28 @@ class SendEmailForgotPasswordUseCase implements ISendEmailForgotPassword {
   public async execute({ email }: ISendEmailPasswordRequestDTO): Promise<void> {
     const userExists = await this.userRepository.findByEmail(email);
 
+    console.log(JSON.stringify(userExists, null, 2));
+
     if (!userExists) {
       throw new AppError('User does not exists.');
     }
 
-    const { token } = await this.userTokenRepository.generate(userExists.id);
+    const { token, refresh_token } = await this.userTokenRepository.findByUser(userExists);
+
+    if (token) {
+      this.userTokenRepository.delete(token);
+    }
+
+    const { expiresIn_access_token } = authConfig.access_token;
+
+    const newToken = await this.userTokenRepository.generate({
+      user_id: userExists.id,
+      expires_date: add(new Date(),
+        {
+          days: Number(expiresIn_access_token)
+        }),
+      refresh_token
+    });
 
     const fogotPasswodTemplate = path.resolve(
       __dirname,
@@ -63,7 +84,7 @@ class SendEmailForgotPasswordUseCase implements ISendEmailForgotPassword {
         file: fogotPasswodTemplate,
         variables: {
           name: userExists.name,
-          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
+          link: `${process.env.APP_WEB_URL}/reset-password?token=${newToken.token}`,
         },
       },
     });

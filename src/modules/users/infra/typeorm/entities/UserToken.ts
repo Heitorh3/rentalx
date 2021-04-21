@@ -6,7 +6,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import User from './User';
 
 @Entity('user_tokens')
 class UserToken {
@@ -15,10 +18,20 @@ class UserToken {
   id?: string;
 
   @Column()
+  refresh_token?: string;
+
+  @Column()
   token?: string;
 
   @Column()
-  user_id: string;
+  user_id?: string;
+
+  @ManyToOne(() => User, user => user.id)
+  @JoinColumn({ name: "user_id" })
+  user: User;
+
+  @CreateDateColumn()
+  expires_date?: Date;
 
   @CreateDateColumn()
   created_at?: Date;
@@ -26,7 +39,12 @@ class UserToken {
   @UpdateDateColumn()
   updated_at?: Date;
 
-  constructor(props: Exclude<UserToken, 'id' | "token" | "created_at" | "updated_at">, id?, token?: string) {
+  constructor(props: Exclude<UserToken,
+    'id' |
+    "token" |
+    "created_at" |
+    "updated_at">, id?, token?: string) {
+
     Object.assign(this, props);
 
     if (!id) {

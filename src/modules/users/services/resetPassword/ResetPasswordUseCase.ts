@@ -32,7 +32,7 @@ class ResetPasswordUseCase implements IResetPasswordUseCase {
     const userToken = await this.userTokenRepository.findByToken(token);
 
     if (!userToken) {
-      throw new AppError('User token does not exists.');
+      throw new AppError('Token does not exists.');
     }
 
     const user = await this.userRepository.findById(userToken.user_id);

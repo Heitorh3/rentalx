@@ -7,8 +7,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import uploadConfig from '@config/upload';
+import UserToken from './UserToken';
 
 @Entity('users')
 class User {
@@ -24,6 +26,9 @@ class User {
 
   @Column()
   cpf: string;
+
+  @OneToMany(() => UserToken, userToken => userToken.user)
+  userToken: UserToken;
 
   @Column({ nullable: true })
   avatar?: string;
