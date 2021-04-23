@@ -24,7 +24,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/api-doc", swaggerUi.server, swaggerUi.setup(swaggerFile));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 Sentry.init({ dsn: sentryConfig.dsn, tracesSampleRate: sentryConfig.tracesSampleRate });
 

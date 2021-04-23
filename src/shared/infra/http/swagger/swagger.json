@@ -5,11 +5,18 @@
     "description":"Esta é a ducumentação da api Rentalx",
     "version":"1.0",
     "contact":{
+      "name":"Heitor Neto",
       "email":"heitorh3@gmail.com"
     },
-    "servers":{
-      "url": "http://localhost:3331/api-doc",
-      "description": " Optional server description, e.g. Internal staging server for testing"
+    "servers": {
+      "url": "{protocol}://localhost:3334/api-doc",
+      "description": " Optional server description, e.g. Internal staging server for testing",
+      "variables": {
+        "protocol": {
+          "enum":["http", "https"],
+          "default":"http"
+        }
+      }
     }
   },
   "paths": {
@@ -53,13 +60,16 @@
           },
           "400":{
             "description": "Email address already exists"
+          },
+          "default":{
+            "description": "Unexpected error"
           }
         }
       },
       "get":{
         "tags": ["users"],
-        "summary":"lista todas as categorias",
-        "description":"lita todas as categorias",
+        "summary":"listar todas as categorias",
+        "description":"litar todas as categorias",
         "responses": {
           "200":{
             "description": "Success",
@@ -85,6 +95,14 @@
               }
             }
           }
+        }
+      }
+    },
+    "ping": {
+      "get": {
+        "server":{
+          "url": "http://localhost:3334",
+          "description":" Override base path for the GET /ping operation"
         }
       }
     }
