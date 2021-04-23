@@ -3,8 +3,11 @@ import 'dotenv/config';
 
 import { errors } from 'celebrate';
 import express, { Request, Response, NextFunction } from 'express';
-import cors from 'cors';
 import 'express-async-errors';
+import cors from 'cors';
+
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "../http/swagger/swagger.json";
 
 import sentryConfig from '@config/sentry';
 import * as Sentry from '@sentry/node';
@@ -20,6 +23,8 @@ import routes from './api/v1';
 const app = express();
 
 app.use(express.json());
+
+app.use("/api-doc", swaggerUi.server, swaggerUi.setup(swaggerFile));
 
 Sentry.init({ dsn: sentryConfig.dsn, tracesSampleRate: sentryConfig.tracesSampleRate });
 

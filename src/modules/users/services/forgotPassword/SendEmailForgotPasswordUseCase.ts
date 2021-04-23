@@ -35,15 +35,15 @@ class SendEmailForgotPasswordUseCase implements ISendEmailForgotPassword {
   public async execute({ email }: ISendEmailPasswordRequestDTO): Promise<void> {
     const userExists = await this.userRepository.findByEmail(email);
 
-    console.log(JSON.stringify(userExists, null, 2));
-
     if (!userExists) {
       throw new AppError('User does not exists.');
     }
 
     const { token, refresh_token } = await this.userTokenRepository.findByUser(userExists);
 
-    if (token) {
+    if (!token) {
+      throw new AppError('Token not found.');
+    } else {
       this.userTokenRepository.delete(token);
     }
 

@@ -3,11 +3,13 @@ import "reflect-metadata"
 import AppError from '@shared/infra/errors/AppError';
 
 import FakeUserRepository from "@modules/users/repositories/fakes/FakeUserRepository";
+import FakeUserTokensRepository from "@modules/users/repositories/fakes/FakeUsersTokensRepository";
 import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
 import FakeLoggerProvider from '@shared/container/providers/LoggerProvider/fakes/FakeLoggerProvider';
 import { AuthenticateUserUseCase } from './authenticateUseCase';
 
 let fakeUsersRepository: FakeUserRepository;
+let fakeUserTokensRepository: FakeUserTokensRepository;
 let fackeHashProvider: FakeHashProvider;
 let authenticateUser: AuthenticateUserUseCase;
 let fakeLoggerProvider: FakeLoggerProvider;
@@ -15,13 +17,15 @@ let fakeLoggerProvider: FakeLoggerProvider;
 describe('Authenticate User ', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUserRepository();
+    fakeUserTokensRepository = new FakeUserTokensRepository();
     fackeHashProvider = new FakeHashProvider();
     fakeLoggerProvider = new FakeLoggerProvider();
 
     authenticateUser = new AuthenticateUserUseCase(
       fakeUsersRepository,
       fackeHashProvider,
-      fakeLoggerProvider
+      fakeLoggerProvider,
+      fakeUserTokensRepository
     );
   });
 

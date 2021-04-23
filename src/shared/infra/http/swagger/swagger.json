@@ -1,0 +1,92 @@
+{
+  "openapi":"3.0.0",
+  "info": {
+    "title":"Rentalx documentation",
+    "description":"Esta é a ducumentação da api Rentalx",
+    "version":"1.0",
+    "contact":{
+      "email":"heitorh3@gmail.com"
+    },
+    "servers":{
+      "url": "http://localhost:3331/api-doc",
+      "description": " Optional server description, e.g. Internal staging server for testing"
+    }
+  },
+  "paths": {
+    "/users":{
+      "post": {
+        "tags":["users"],
+        "summary": "Cria um novo usuário",
+        "description": "Cria um novo usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type":"object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name":"Jhon Doe",
+                  "email":"jhondoe@gmail.com",
+                  "cpf":"16018674688",
+                  "password":"floresta"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400":{
+            "description": "Email address already exists"
+          }
+        }
+      },
+      "get":{
+        "tags": ["users"],
+        "summary":"lista todas as categorias",
+        "description":"lita todas as categorias",
+        "responses": {
+          "200":{
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type": "array",
+                  "properties":{
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "cpf": {
+                      "type": "string"
+                    },
+                    "avatar_url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

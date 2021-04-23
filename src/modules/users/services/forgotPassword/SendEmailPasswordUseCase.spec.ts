@@ -15,7 +15,7 @@ let fakeUserTokensRepository: FakeUserTokensRepository;
 let sendEmailForgotPasswordUseCase: SendEmailForgotPasswordUseCase;
 let fakeLoggerProvider: FakeLoggerProvider;
 
-describe('Send Forgot Password EMail ', () => {
+describe('Send Forgot Password E-mail ', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUserRepository();
     fakeMailProvider = new FakeMailProvider();
@@ -43,6 +43,13 @@ describe('Send Forgot Password EMail ', () => {
     await sendEmailForgotPasswordUseCase.execute({ email: 'johndoe@gmail.com' });
 
     expect(sendMail).toHaveBeenCalled();
+
+  });
+
+  it('it should not be possible to receive a recovery email without ever having logged in', async () => {
+    await expect(
+      sendEmailForgotPasswordUseCase.execute({ email: 'johndoe@gmail.com' }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not be able to recovery a non-existing user password', async () => {
