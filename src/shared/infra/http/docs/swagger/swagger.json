@@ -29,27 +29,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type":"object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "cpf": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
-                },
-                "example": {
-                  "name":"Jhon Doe",
-                  "email":"jhondoe@gmail.com",
-                  "cpf":"16018674688",
-                  "password":"floresta"
-                }
+                "$ref":"#/components/schemas/User"
               }
             }
           }
@@ -68,29 +48,15 @@
       },
       "get":{
         "tags": ["users"],
-        "summary":"listar todas as categorias",
-        "description":"litar todas as categorias",
+        "summary":"listar todos os usuários",
+        "description":"litar todos os usuários",
         "responses": {
           "200":{
             "description": "Success",
             "content":{
               "application/json":{
                 "schema":{
-                  "type": "array",
-                  "properties":{
-                    "name": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "cpf": {
-                      "type": "string"
-                    },
-                    "avatar_url": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref":"#/components/schemas/User"
                 }
               }
             }
@@ -103,6 +69,69 @@
         "server":{
           "url": "http://localhost:3334",
           "description":" Override base path for the GET /ping operation"
+        }
+      }
+    },
+    "profile":{
+      "put": {
+        "tags": ["profile"],
+        "summary":"edita os dados de um usuário",
+        "description":"Editar os dados de um usuário",
+        "operationID": "user.id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref":"#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses":{
+          "201":{
+            "description": "Operação realizada com sucesso",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components":{
+    "schemas": {
+      "User" : {
+        "type":"object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "cpf",
+          "password"
+        ]
+        ,
+        "example": {
+          "name":"Jhon Doe",
+          "email":"jhondoe@gmail.com",
+          "cpf":"16018674688",
+          "password":"floresta"
         }
       }
     }
