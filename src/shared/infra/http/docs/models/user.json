@@ -1,0 +1,32 @@
+{
+  "User" : {
+    "type":"object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string"
+      },
+      "cpf": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "email",
+      "cpf",
+      "password"
+    ]
+    ,
+    "example": {
+      "name":"Jhon Doe",
+      "email":"jhondoe@gmail.com",
+      "cpf":"16018674688",
+      "password":"floresta"
+    }
+  }
+}
