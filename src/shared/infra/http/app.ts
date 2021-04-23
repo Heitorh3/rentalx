@@ -7,7 +7,7 @@ import 'express-async-errors';
 import cors from 'cors';
 
 import swaggerUi from "swagger-ui-express";
-import swaggerFile from "../http/swagger/swagger.json";
+import swaggerFile from "../http/docs/swagger/swagger.json";
 
 import sentryConfig from '@config/sentry';
 import * as Sentry from '@sentry/node';
