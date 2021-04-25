@@ -1,20 +1,18 @@
-import User from '@modules/users/infra/typeorm/entities/User';
 import { injectable, inject } from 'tsyringe';
 
-import IUpdateProfileRequestDTO from "../../dtos/IUpdateProfileRequestDTO";
-import { IUpdateProfileUseCase } from "./IUpdateProfileUseCase";
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
+import LoggerProvider from '@shared/container/providers/LoggerProvider/models/ILoggerProvider';
+import AppError from '@shared/infra/errors/AppError';
 
+import User from '@modules/users/infra/typeorm/entities/User';
 import { IUserRepository } from '@modules/users/repositories/IUserRepository';
 
-import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
-import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
-import LoggerProvider from "@shared/container/providers/LoggerProvider/models/ILoggerProvider";
-
-import AppError from '@shared/infra/errors/AppError';
+import IUpdateProfileRequestDTO from '../../dtos/IUpdateProfileRequestDTO';
+import { IUpdateProfileUseCase } from './IUpdateProfileUseCase';
 
 @injectable()
 class UpdateProfileUseCase implements IUpdateProfileUseCase {
-
   constructor(
     @inject('UserRepository')
     private userRepository: IUserRepository,
@@ -27,7 +25,7 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
 
     @inject('LoggerProvider')
     private loggerProvider: LoggerProvider,
-  ) { }
+  ) {}
 
   public async execute({
     user_id,
@@ -35,7 +33,8 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
     email,
     cpf,
     password,
-    old_password }: IUpdateProfileRequestDTO): Promise<User> {
+    old_password,
+  }: IUpdateProfileRequestDTO): Promise<User> {
     const user = await this.userRepository.findById(user_id);
 
     if (!user) {
@@ -43,9 +42,7 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
     }
 
     if (!cpf || !email) {
-      throw new AppError(
-        'You need to inform the cpf and email address.',
-      );
+      throw new AppError('You need to inform the cpf and email address.');
     }
 
     const userWithUpdatedEmail = await this.userRepository.findByEmail(email);
@@ -85,8 +82,8 @@ class UpdateProfileUseCase implements IUpdateProfileUseCase {
     user.cpf = cpf;
 
     await this.cacheProvider.invalidatePrefix('users-list');
-    return await this.userRepository.save(user);
+    return this.userRepository.save(user);
   }
 }
 
-export { UpdateProfileUseCase }
+export { UpdateProfileUseCase };

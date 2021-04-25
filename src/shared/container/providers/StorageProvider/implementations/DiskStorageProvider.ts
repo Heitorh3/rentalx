@@ -3,12 +3,11 @@ import path from 'path';
 
 import uploadConfig from '@config/upload';
 
-import IStorageProvider from '../model/IStorageProvider';
+import IStorageProvider from '../models/IStorageProvider';
 
 class DiskStorageProvider implements IStorageProvider {
   public async saveFile(file: string): Promise<string> {
-
-    await fs.renameSync(
+    fs.renameSync(
       path.resolve(uploadConfig.tmpFolder, file),
       path.resolve(uploadConfig.uploadsFolder, file),
     );
@@ -20,13 +19,12 @@ class DiskStorageProvider implements IStorageProvider {
     const filePath = path.resolve(uploadConfig.uploadsFolder, file);
 
     try {
-
-      await fs.statSync(filePath);
+      fs.statSync(filePath);
     } catch {
       return;
     }
 
-    await fs.unlinkSync(filePath);
+    fs.unlinkSync(filePath);
   }
 }
 

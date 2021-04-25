@@ -1,7 +1,6 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateTableUserToken1618923975450 implements MigrationInterface {
-
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -10,7 +9,7 @@ export class CreateTableUserToken1618923975450 implements MigrationInterface {
           {
             name: 'id',
             type: 'varchar',
-            isPrimary: true
+            isPrimary: true,
           },
           {
             name: 'token',
@@ -39,15 +38,14 @@ export class CreateTableUserToken1618923975450 implements MigrationInterface {
             referencedColumnNames: ['id'],
             columnNames: ['user_id'],
             onDelete: 'CASCADE',
-            onUpdate: 'CASCADE'
-          }
-        ]
-      })
-    )
+            onUpdate: 'CASCADE',
+          },
+        ],
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('user_tokens');
   }
-
 }

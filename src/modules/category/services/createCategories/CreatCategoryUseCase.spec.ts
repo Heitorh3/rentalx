@@ -26,6 +26,6 @@ describe('Create category', () => {
   it('should create a new category', () => {
     const soma = 2 + 2;
 
-    expect(soma).toBe(4)
-  })
+    expect(soma).toBe(4);
+  });
 });

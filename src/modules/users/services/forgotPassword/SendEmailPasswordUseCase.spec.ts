@@ -1,12 +1,12 @@
-import "reflect-metadata"
+import 'reflect-metadata';
+import FakeMailProvider from '@shared/container/providers/EmailProvider/fakes/FakeMailProvider';
+import FakeLoggerProvider from '@shared/container/providers/LoggerProvider/fakes/FakeLoggerProvider';
 import AppError from '@shared/infra/errors/AppError';
 
-import { SendEmailForgotPasswordUseCase } from './SendEmailForgotPasswordUseCase';
+import FakeUserRepository from '@modules/users/repositories/fakes/FakeUserRepository';
+import FakeUserTokensRepository from '@modules/users/repositories/fakes/FakeUsersTokensRepository';
 
-import FakeUserRepository from "@modules/users/repositories/fakes/FakeUserRepository";
-import FakeUserTokensRepository from "@modules/users/repositories/fakes/FakeUsersTokensRepository";
-import FakeLoggerProvider from '@shared/container/providers/LoggerProvider/fakes/FakeLoggerProvider';
-import FakeMailProvider from "@shared/container/providers/EmailProvider/fakes/FakeMailProvider";
+import { SendEmailForgotPasswordUseCase } from './SendEmailForgotPasswordUseCase';
 
 let fakeUsersRepository: FakeUserRepository;
 let fakeMailProvider: FakeMailProvider;
@@ -26,7 +26,7 @@ describe('Send Forgot Password E-mail ', () => {
       fakeUsersRepository,
       fakeMailProvider,
       fakeUserTokensRepository,
-      fakeLoggerProvider
+      fakeLoggerProvider,
     );
   });
 
@@ -40,10 +40,11 @@ describe('Send Forgot Password E-mail ', () => {
       password: '123456',
     });
 
-    await sendEmailForgotPasswordUseCase.execute({ email: 'johndoe@gmail.com' });
+    await sendEmailForgotPasswordUseCase.execute({
+      email: 'johndoe@gmail.com',
+    });
 
     expect(sendMail).toHaveBeenCalled();
-
   });
 
   it('it should not be possible to receive a recovery email without ever having logged in', async () => {
@@ -68,7 +69,9 @@ describe('Send Forgot Password E-mail ', () => {
       password: '123456',
     });
 
-    await sendEmailForgotPasswordUseCase.execute({ email: 'johndoe@gmail.com' });
+    await sendEmailForgotPasswordUseCase.execute({
+      email: 'johndoe@gmail.com',
+    });
 
     await expect(generateToken).toHaveBeenCalledWith(user.id);
   });

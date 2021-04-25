@@ -1,16 +1,15 @@
 import { isAfter, addHours } from 'date-fns';
-import { injectable, inject } from "tsyringe";
+import { injectable, inject } from 'tsyringe';
 
-import IResetPasswordRequestDTO from "@modules/users/dtos/IResetPasswordRequestDTO";
-import { IResetPasswordUseCase } from "./IResetPasswordUseCase";
-
-import { IUserRepository } from '@modules/users/repositories/IUserRepository';
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import LoggerProvider from '@shared/container/providers/LoggerProvider/models/ILoggerProvider';
+import AppError from '@shared/infra/errors/AppError';
 
+import IResetPasswordRequestDTO from '@modules/users/dtos/IResetPasswordRequestDTO';
+import { IUserRepository } from '@modules/users/repositories/IUserRepository';
 import { IUserTokenRepository } from '@modules/users/repositories/IUserTokenRepository';
 
-import AppError from '@shared/infra/errors/AppError';
+import { IResetPasswordUseCase } from './IResetPasswordUseCase';
 
 @injectable()
 class ResetPasswordUseCase implements IResetPasswordUseCase {
@@ -28,7 +27,10 @@ class ResetPasswordUseCase implements IResetPasswordUseCase {
     private loggerProvider: LoggerProvider,
   ) { }
 
-  public async execute({ token, password }: IResetPasswordRequestDTO): Promise<void> {
+  public async execute({
+    token,
+    password,
+  }: IResetPasswordRequestDTO): Promise<void> {
     const userToken = await this.userTokenRepository.findByToken(token);
 
     if (!userToken) {
@@ -58,4 +60,4 @@ class ResetPasswordUseCase implements IResetPasswordUseCase {
   }
 }
 
-export { ResetPasswordUseCase }
+export { ResetPasswordUseCase };

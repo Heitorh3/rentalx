@@ -25,7 +25,7 @@ class CreateUserUseCase implements ICreateUserUseCase {
 
     @inject('LoggerProvider')
     private loggerProvider: LoggerProvider,
-  ) { }
+  ) {}
 
   public async execute({
     name,

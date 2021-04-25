@@ -1,9 +1,9 @@
 import { v4 as uuidV4 } from 'uuid';
 
-import User from "@modules/users/infra/typeorm/entities/User";
-
-import { IUserRepository } from "../IUserRepository";
 import ICreateUserRequestDTO from '@modules/users/dtos/ICreateUserRequestDTO';
+import User from '@modules/users/infra/typeorm/entities/User';
+
+import { IUserRepository } from '../IUserRepository';
 
 class FakeUserRepository implements IUserRepository {
   private users: User[] = [];
@@ -33,7 +33,6 @@ class FakeUserRepository implements IUserRepository {
     this.users.push(user);
 
     return user;
-
   }
 
   public async save(user: User): Promise<User> {
@@ -43,7 +42,6 @@ class FakeUserRepository implements IUserRepository {
 
     return user;
   }
-
 }
 
 export default FakeUserRepository;

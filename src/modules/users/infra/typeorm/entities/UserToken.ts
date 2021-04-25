@@ -1,5 +1,3 @@
-import { v4 as uuidV4 } from 'uuid';
-
 import {
   Entity,
   PrimaryColumn,
@@ -9,11 +7,12 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import { v4 as uuidV4 } from 'uuid';
+
 import User from './User';
 
 @Entity('user_tokens')
 class UserToken {
-
   @PrimaryColumn()
   id?: string;
 
@@ -27,7 +26,7 @@ class UserToken {
   user_id?: string;
 
   @ManyToOne(() => User, user => user.id)
-  @JoinColumn({ name: "user_id" })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @CreateDateColumn()
@@ -39,12 +38,11 @@ class UserToken {
   @UpdateDateColumn()
   updated_at?: Date;
 
-  constructor(props: Exclude<UserToken,
-    'id' |
-    "token" |
-    "created_at" |
-    "updated_at">, id?, token?: string) {
-
+  constructor(
+    props: Exclude<UserToken, 'id' | 'token' | 'created_at' | 'updated_at'>,
+    id?: string,
+    token?: string,
+  ) {
     Object.assign(this, props);
 
     if (!id) {

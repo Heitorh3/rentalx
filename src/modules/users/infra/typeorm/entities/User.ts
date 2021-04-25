@@ -1,6 +1,4 @@
-import { v4 as uuidV4 } from 'uuid';
 import { Exclude, Expose } from 'class-transformer';
-
 import {
   Entity,
   PrimaryColumn,
@@ -9,12 +7,14 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
+import { v4 as uuidV4 } from 'uuid';
+
 import uploadConfig from '@config/upload';
+
 import UserToken from './UserToken';
 
 @Entity('users')
 class User {
-
   @PrimaryColumn()
   id?: string;
 
@@ -43,14 +43,16 @@ class User {
   @UpdateDateColumn()
   updated_at?: Date;
 
-  constructor(props: Exclude<User, 'id' | "avatar" | "created_at" | "updated_at">, id?: string) {
+  constructor(
+    props: Exclude<User, 'id' | 'avatar' | 'created_at' | 'updated_at'>,
+    id?: string,
+  ) {
     Object.assign(this, props);
 
     if (!id) {
       this.id = uuidV4();
     }
   }
-
 
   @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {

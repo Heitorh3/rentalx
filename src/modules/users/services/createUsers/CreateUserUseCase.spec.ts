@@ -1,12 +1,13 @@
-import "reflect-metadata"
-import AppError from '@shared/infra/errors/AppError';
+import 'reflect-metadata';
 
-import { CreateUserUseCase } from './CreateUserUseCase';
-
-import FakeUserRepository from "@modules/users/repositories/fakes/FakeUserRepository";
 import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
 import FakeLoggerProvider from '@shared/container/providers/LoggerProvider/fakes/FakeLoggerProvider';
+import AppError from '@shared/infra/errors/AppError';
+
+import FakeUserRepository from '@modules/users/repositories/fakes/FakeUserRepository';
+
+import { CreateUserUseCase } from './CreateUserUseCase';
 
 let createUserUseCase: CreateUserUseCase;
 
@@ -26,7 +27,7 @@ describe('Create user', () => {
       fakeUserRepository,
       fakeHashProvider,
       fakeCacheProvider,
-      fakeLoggerProvider
+      fakeLoggerProvider,
     );
   });
 

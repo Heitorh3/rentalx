@@ -2,12 +2,13 @@ import 'reflect-metadata';
 import 'dotenv/config';
 
 import { errors } from 'celebrate';
-import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
+import express, { Request, Response, NextFunction } from 'express';
+import swaggerUi from 'swagger-ui-express';
 
-import swaggerUi from "swagger-ui-express";
-import swaggerFile from "../http/docs/swagger/swagger.json";
+import AppError from '@shared/infra/errors/AppError';
+import TokenExpiredError from '@shared/infra/errors/TokenExpiredError';
 
 import sentryConfig from '@config/sentry';
 import * as Sentry from '@sentry/node';
@@ -15,19 +16,20 @@ import * as Sentry from '@sentry/node';
 import '@shared/infra/typeorm';
 import '@shared/container';
 import '@shared/mongoose/connections';
-import AppError from '@shared/infra/errors/AppError';
-import TokenExpiredError from '@shared/infra/errors/TokenExpiredError';
 
 import routes from './api/v1';
+import swaggerFile from './docs/swagger/swagger.json';
 
 const app = express();
 
 app.use(express.json());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
-
-Sentry.init({ dsn: sentryConfig.dsn, tracesSampleRate: sentryConfig.tracesSampleRate });
+Sentry.init({
+  dsn: sentryConfig.dsn,
+  tracesSampleRate: sentryConfig.tracesSampleRate,
+});
 
 app.use(Sentry.Handlers.errorHandler());
 
@@ -68,4 +70,4 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   });
 });
 
-export { app }
+export { app };

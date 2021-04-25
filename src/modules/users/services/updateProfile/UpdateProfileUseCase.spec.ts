@@ -1,12 +1,13 @@
-import "reflect-metadata"
-import AppError from '@shared/infra/errors/AppError';
+import 'reflect-metadata';
 
-import { UpdateProfileUseCase } from './UpdateProfileUseCase'
-
-import FakeUserRepository from "@modules/users/repositories/fakes/FakeUserRepository";
 import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
 import FakeLoggerProvider from '@shared/container/providers/LoggerProvider/fakes/FakeLoggerProvider';
+import AppError from '@shared/infra/errors/AppError';
+
+import FakeUserRepository from '@modules/users/repositories/fakes/FakeUserRepository';
+
+import { UpdateProfileUseCase } from './UpdateProfileUseCase';
 
 let fakeUsersRepository: FakeUserRepository;
 let fakeHashProvider: FakeHashProvider;
@@ -25,7 +26,7 @@ describe('Update profile ', () => {
       fakeUsersRepository,
       fakeHashProvider,
       fakeCacheProvider,
-      fakeLoggerProvider
+      fakeLoggerProvider,
     );
   });
 
@@ -41,7 +42,7 @@ describe('Update profile ', () => {
       user_id: user.id,
       name: 'Jhon Doe 1',
       email: 'johndoe@hotmail.com',
-      cpf: '68235321068'
+      cpf: '68235321068',
     });
 
     expect(updatedUser.name).toBe('Jhon Doe 1');
@@ -143,7 +144,7 @@ describe('Update profile ', () => {
         user_id: user.id,
         name: 'Jhon Doe',
         email: '',
-        cpf: '68235321068'
+        cpf: '68235321068',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

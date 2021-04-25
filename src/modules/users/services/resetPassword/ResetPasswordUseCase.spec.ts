@@ -1,19 +1,19 @@
-import "reflect-metadata"
-import AppError from '@shared/infra/errors/AppError';
+import 'reflect-metadata';
 
-import { ResetPasswordUseCase } from './ResetPasswordUseCase'
-
-import FakeUserRepository from "@modules/users/repositories/fakes/FakeUserRepository";
-import FakeUserTokensRepository from "@modules/users/repositories/fakes/FakeUsersTokensRepository";
 import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
 import FakeLoggerProvider from '@shared/container/providers/LoggerProvider/fakes/FakeLoggerProvider';
+import AppError from '@shared/infra/errors/AppError';
+
+import FakeUserRepository from '@modules/users/repositories/fakes/FakeUserRepository';
+import FakeUserTokensRepository from '@modules/users/repositories/fakes/FakeUsersTokensRepository';
+
+import { ResetPasswordUseCase } from './ResetPasswordUseCase';
 
 let fakeUsersRepository: FakeUserRepository;
 let fakeUserTokensRepository: FakeUserTokensRepository;
 let fakeHashProvider: FakeHashProvider;
 let resetPassword: ResetPasswordUseCase;
-let fakeCacheProvider: FakeCacheProvider;
 let fakeLoggerProvider: FakeLoggerProvider;
 
 describe('Reset Password ', () => {
@@ -21,14 +21,13 @@ describe('Reset Password ', () => {
     fakeUsersRepository = new FakeUserRepository();
     fakeUserTokensRepository = new FakeUserTokensRepository();
     fakeHashProvider = new FakeHashProvider();
-    fakeCacheProvider = new FakeCacheProvider();
     fakeLoggerProvider = new FakeLoggerProvider();
 
     resetPassword = new ResetPasswordUseCase(
       fakeUsersRepository,
       fakeUserTokensRepository,
       fakeHashProvider,
-      fakeLoggerProvider
+      fakeLoggerProvider,
     );
   });
 
@@ -49,7 +48,7 @@ describe('Reset Password ', () => {
 
     expect(updatedUser?.password).toBe('new-password');
     expect(generateHash).toHaveBeenCalledWith('new-password');
-  })
+  });
 
   it('should not be able to reset the password with non-exiting token ', async () => {
     await expect(

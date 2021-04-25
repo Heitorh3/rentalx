@@ -1,8 +1,9 @@
-import { getRepository, Repository } from "typeorm";
-import { IUserRepository } from "../../../../repositories/IUserRepository";
+import { getRepository, Repository } from 'typeorm';
 
-import User from "@modules/users/infra/typeorm/entities/User";
 import ICreateUserRequestDTO from '@modules/users/dtos/ICreateUserRequestDTO';
+import User from '@modules/users/infra/typeorm/entities/User';
+
+import { IUserRepository } from '../../../../repositories/IUserRepository';
 
 class UserRepository implements IUserRepository {
   private ormRepository: Repository<User>;
@@ -27,7 +28,7 @@ class UserRepository implements IUserRepository {
 
   public async findByEmail(email: string): Promise<User> {
     const userAlreadyExists = await this.ormRepository.findOne({
-      where: { email }
+      where: { email },
     });
 
     return userAlreadyExists;
@@ -45,4 +46,4 @@ class UserRepository implements IUserRepository {
   }
 }
 
-export { UserRepository }
+export { UserRepository };

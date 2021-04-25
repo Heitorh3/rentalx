@@ -1,20 +1,17 @@
-import path from 'path';
 import { add } from 'date-fns';
+import path from 'path';
+import { injectable, inject } from 'tsyringe';
 
-import { injectable, inject } from "tsyringe";
+import IMailProvider from '@shared/container/providers/EmailProvider/model/IMailProvider';
+import LoggerProvider from '@shared/container/providers/LoggerProvider/models/ILoggerProvider';
+import AppError from '@shared/infra/errors/AppError';
 
 import authConfig from '@config/auth';
-
-import { ISendEmailPasswordRequestDTO } from "@modules/users/dtos/ISendEmailPasswordRequestDTO";
-import { ISendEmailForgotPassword } from "./ISendEmailForgotPassword";
-
+import { ISendEmailPasswordRequestDTO } from '@modules/users/dtos/ISendEmailPasswordRequestDTO';
 import { IUserRepository } from '@modules/users/repositories/IUserRepository';
-import LoggerProvider from '@shared/container/providers/LoggerProvider/models/ILoggerProvider';
-
 import { IUserTokenRepository } from '@modules/users/repositories/IUserTokenRepository';
-import IMailProvider from "@shared/container/providers/EmailProvider/model/IMailProvider";
 
-import AppError from '@shared/infra/errors/AppError';
+import { ISendEmailForgotPassword } from './ISendEmailForgotPassword';
 
 @injectable()
 class SendEmailForgotPasswordUseCase implements ISendEmailForgotPassword {
@@ -30,7 +27,7 @@ class SendEmailForgotPasswordUseCase implements ISendEmailForgotPassword {
 
     @inject('LoggerProvider')
     private loggerProvider: LoggerProvider,
-  ) { }
+  ) {}
 
   public async execute({ email }: ISendEmailPasswordRequestDTO): Promise<void> {
     const userExists = await this.userRepository.findByEmail(email);
@@ -39,7 +36,9 @@ class SendEmailForgotPasswordUseCase implements ISendEmailForgotPassword {
       throw new AppError('User does not exists.');
     }
 
-    const { token, refresh_token } = await this.userTokenRepository.findByUser(userExists);
+    const { token, refresh_token } = await this.userTokenRepository.findByUser(
+      userExists,
+    );
 
     if (!token) {
       throw new AppError('Token not found.');
@@ -51,11 +50,10 @@ class SendEmailForgotPasswordUseCase implements ISendEmailForgotPassword {
 
     const newToken = await this.userTokenRepository.generate({
       user_id: userExists.id,
-      expires_date: add(new Date(),
-        {
-          days: Number(expiresIn_access_token)
-        }),
-      refresh_token
+      expires_date: add(new Date(), {
+        days: Number(expiresIn_access_token),
+      }),
+      refresh_token,
     });
 
     const fogotPasswodTemplate = path.resolve(
@@ -90,4 +88,4 @@ class SendEmailForgotPasswordUseCase implements ISendEmailForgotPassword {
     });
   }
 }
-export { SendEmailForgotPasswordUseCase }
+export { SendEmailForgotPasswordUseCase };
