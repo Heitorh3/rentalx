@@ -27,7 +27,7 @@ class SendEmailForgotPasswordUseCase implements ISendEmailForgotPassword {
 
     @inject('LoggerProvider')
     private loggerProvider: LoggerProvider,
-  ) {}
+  ) { }
 
   public async execute({ email }: ISendEmailPasswordRequestDTO): Promise<void> {
     const userExists = await this.userRepository.findByEmail(email);
@@ -46,12 +46,12 @@ class SendEmailForgotPasswordUseCase implements ISendEmailForgotPassword {
       this.userTokenRepository.delete(token);
     }
 
-    const { expiresIn_access_token } = authConfig.access_token;
+    const { expiresIn } = authConfig.access_token;
 
     const newToken = await this.userTokenRepository.generate({
       user_id: userExists.id,
       expires_date: add(new Date(), {
-        days: Number(expiresIn_access_token),
+        days: Number(expiresIn),
       }),
       refresh_token,
     });

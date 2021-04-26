@@ -25,7 +25,7 @@ class ResetPasswordUseCase implements IResetPasswordUseCase {
 
     @inject('LoggerProvider')
     private loggerProvider: LoggerProvider,
-  ) { }
+  ) {}
 
   public async execute({
     token,

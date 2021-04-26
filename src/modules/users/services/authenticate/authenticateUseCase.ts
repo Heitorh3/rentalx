@@ -1,9 +1,9 @@
 import { add } from 'date-fns';
-import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
 
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import LoggerProvider from '@shared/container/providers/LoggerProvider/models/ILoggerProvider';
+import ITokenProvider from '@shared/container/providers/TokenProviver/models/ITokenProvider';
 import AppError from '@shared/infra/errors/AppError';
 
 import authConfig from '@config/auth';
@@ -28,7 +28,10 @@ class AuthenticateUserUseCase implements IAthenticateUserUseCase {
 
     @inject('UserTokenRepository')
     private userTokenRepository: IUserTokenRepository,
-  ) {}
+
+    @inject('TokenProvider')
+    private tokenProvider: ITokenProvider,
+  ) { }
 
   public async execute({
     cpf,
@@ -49,28 +52,33 @@ class AuthenticateUserUseCase implements IAthenticateUserUseCase {
       throw new AppError('Incorrect cpf and password combination', 401);
     }
 
-    const {
-      secret_access_token,
-      expiresIn_access_token,
-    } = authConfig.access_token;
+    // const {
+    //   secret_access_token,
+    //   expiresIn_access_token,
+    // } = authConfig.access_token;
 
-    const access_token = sign({ id: user.id }, secret_access_token, {
-      expiresIn: expiresIn_access_token,
-    });
+    // const access_token = sign({ id: user.id }, secret_access_token, {
+    //   expiresIn: expiresIn_access_token,
+    // });
 
-    const {
-      secret_refresh_token,
-      expiresIn_refresh_token,
-    } = authConfig.refresh_token;
+    const access_token = this.tokenProvider.generateAccessToken(user.id);
+    const refresh_token = this.tokenProvider.genereteRefreshToken(user.id);
 
-    const refresh_token = sign({ id: user.id }, secret_refresh_token, {
-      expiresIn: expiresIn_refresh_token,
-    });
+    //   const {
+    //     secret_refresh_token,
+    //     expiresIn_refresh_token,
+    //   } = authConfig.refresh_token;
+
+    // const refresh_token = sign({ id: user.id }, secret_refresh_token, {
+    //   expiresIn: expiresIn_refresh_token,
+    // });
+
+    const { expiresIn } = authConfig.refresh_token;
 
     await this.userTokenRepository.generate({
       user_id: user.id,
       expires_date: add(new Date(), {
-        days: Number(expiresIn_refresh_token),
+        days: Number(expiresIn),
       }),
       refresh_token,
     });
